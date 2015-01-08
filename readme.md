@@ -1,4 +1,6 @@
-> Bump your Semver in cordova projects
+> Bump your Cordova package version
+
+Run this before you run cordova build
 
 ## Install
 
