@@ -17,9 +17,9 @@ gulp.task("bump", function(params)
 {
     if (gulp.env.patch) {
         bump('patch');
-    } elseif (gulp.env.minor) {
+    } else if (gulp.env.minor) {
         bump('minor');
-    } elseif (gulp.env.major) {
+    } else if (gulp.env.major) {
         bump('major');
     }
 }
