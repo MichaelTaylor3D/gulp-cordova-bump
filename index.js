@@ -2,7 +2,6 @@
 var gulp = require('gulp'),
     bump = require('gulp-bump'),
     gutil = require('gulp-util'),
-    Q = require('q')
     semver = require('semver'),
     filter = require('gulp-filter'),
     xeditor = require("gulp-xml-editor"),
