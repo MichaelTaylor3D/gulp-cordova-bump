@@ -34,3 +34,5 @@ function bumpver(version) {
 
   return deferred.promise;
 }
+
+module.exports = bumpver;
