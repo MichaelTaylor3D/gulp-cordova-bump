@@ -31,7 +31,7 @@ function bumpver(version) {
     .pipe(xeditor([
         { path: '.', attr: { 'version': newVer } } 
     ]))
-  .pipe(gulp.dest("./dest"));
+  .pipe(gulp.dest("./"));
 }
 
 module.exports = bumpver;
