@@ -1,7 +1,7 @@
 {
   "name": "gulp-cordova-bump",
-  "version": "0.0.6",
-  "description": "Bump semver for cordova",
+  "version": "0.0.8",
+  "description": "Bump cordova package version",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -19,13 +19,10 @@
     "semver"
   ],
   "devDependencies": {
-    "bump": "^0.2.5",
-    "gulp-bump": "^0.1.11",
     "gulp-filter": "^2.0.0",
     "gulp-util": "^3.0.2",
     "gulp-xml-editor": "^2.1.1",
     "gutil": "^1.5.5",
-    "q": "^1.1.2",
     "semver": "^4.2.0"
   }
 }
