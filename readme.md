@@ -32,4 +32,4 @@ $ gulp bump --major
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
