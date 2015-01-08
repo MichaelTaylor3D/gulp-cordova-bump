@@ -12,6 +12,12 @@
     "email": "mtaylor@michaeltaylor3d.com",
     "url": "http://www.michaeltaylor3d.com"
   },
+  "keywords": [
+    "gulpplugin",
+    "cordova",
+    "bump",
+    "semver"
+  ],
   "devDependencies": {
     "gulp-bump": "^0.1.11",
     "gulp-exec": "^2.1.1",
