@@ -1,0 +1,23 @@
+{
+  "name": "gulp-cordova-bump",
+  "version": "0.0.1",
+  "description": "Bump semver for cordova",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://michaeltaylor3d@bitbucket.org/michaeltaylor3d/gulp-cordova-bump.git"
+  },
+  "author": {
+    "name": "Michael Taylor",
+    "email": "mtaylor@michaeltaylor3d.com",
+    "url": "http://www.michaeltaylor3d.com"
+  },
+  "devDependencies": {
+    "gulp-bump": "^0.1.11",
+    "gulp-exec": "^2.1.1",
+    "gulp-filter": "^2.0.0",
+    "gulp-util": "^3.0.2",
+    "q": "^1.1.2",
+    "semver": "^4.2.0"
+  }
+}

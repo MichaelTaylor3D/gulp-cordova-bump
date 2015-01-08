@@ -1,0 +1,307 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'gulp-xml-editor',
+1 verbose cli   '--save-dev' ]
+2 info using npm@1.4.21
+3 info using node@v0.10.30
+4 warn package.json gulp-cordova-bump@0.0.1 No repository field.
+5 warn package.json gulp-cordova-bump@0.0.1 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'gulp-xml-editor', null ]
+8 verbose cache add name=undefined spec="gulp-xml-editor" args=["gulp-xml-editor",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'gulp-xml-editor',
+9 verbose parsed url   path: 'gulp-xml-editor',
+9 verbose parsed url   href: 'gulp-xml-editor' }
+10 silly lockFile 0752fd4e-gulp-xml-editor gulp-xml-editor
+11 verbose lock gulp-xml-editor /Users/michaeltaylor/.npm/0752fd4e-gulp-xml-editor.lock
+12 silly lockFile 0752fd4e-gulp-xml-editor gulp-xml-editor
+13 silly lockFile 0752fd4e-gulp-xml-editor gulp-xml-editor
+14 verbose addNamed [ 'gulp-xml-editor', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile c047ea9f-gulp-xml-editor gulp-xml-editor@
+17 verbose lock gulp-xml-editor@ /Users/michaeltaylor/.npm/c047ea9f-gulp-xml-editor.lock
+18 silly addNameRange { name: 'gulp-xml-editor', range: '*', hasData: false }
+19 verbose registry.get https://registry.npmjs.org/gulp-xml-editor not expired, no request
+20 silly addNameRange number 2 { name: 'gulp-xml-editor', range: '*', hasData: true }
+21 silly addNameRange versions [ 'gulp-xml-editor',
+21 silly addNameRange   [ '0.0.1',
+21 silly addNameRange     '1.0.1',
+21 silly addNameRange     '1.0.2',
+21 silly addNameRange     '2.0.0',
+21 silly addNameRange     '2.0.1',
+21 silly addNameRange     '2.0.2',
+21 silly addNameRange     '2.1.0',
+21 silly addNameRange     '2.1.1' ] ]
+22 verbose addNamed [ 'gulp-xml-editor', '2.1.1' ]
+23 verbose addNamed [ '2.1.1', '2.1.1' ]
+24 silly lockFile 7a48a605-gulp-xml-editor-2-1-1 gulp-xml-editor@2.1.1
+25 verbose lock gulp-xml-editor@2.1.1 /Users/michaeltaylor/.npm/7a48a605-gulp-xml-editor-2-1-1.lock
+26 silly lockFile 7a48a605-gulp-xml-editor-2-1-1 gulp-xml-editor@2.1.1
+27 silly lockFile 7a48a605-gulp-xml-editor-2-1-1 gulp-xml-editor@2.1.1
+28 silly lockFile c047ea9f-gulp-xml-editor gulp-xml-editor@
+29 silly lockFile c047ea9f-gulp-xml-editor gulp-xml-editor@
+30 silly resolved [ { name: 'gulp-xml-editor',
+30 silly resolved     version: '2.1.1',
+30 silly resolved     description: 'A gulp plugin to edit XML document (libxmljs wrapper)',
+30 silly resolved     license: 'MIT',
+30 silly resolved     keywords: [ 'gulpplugin', 'gulp', 'xml', 'libxmljs' ],
+30 silly resolved     homepage: 'https://github.com/morou/gulp-xml-editor',
+30 silly resolved     bugs: { url: 'https://github.com/morou/gulp-xml-editor/issues' },
+30 silly resolved     author:
+30 silly resolved      { name: 'Kazuhiro Nakae',
+30 silly resolved        email: 'kazuhiro.nakae@gmail.com',
+30 silly resolved        url: 'https://github.com/morou' },
+30 silly resolved     main: './index.js',
+30 silly resolved     repository:
+30 silly resolved      { type: 'git',
+30 silly resolved        url: 'git://github.com/morou/gulp-xml-editor.git' },
+30 silly resolved     scripts: { test: 'mocha' },
+30 silly resolved     dependencies:
+30 silly resolved      { 'gulp-util': '~3.0.1',
+30 silly resolved        through2: '~1.1.1',
+30 silly resolved        libxmljs: '~0.12.0' },
+30 silly resolved     devDependencies: { gulp: '*', mocha: '*', should: '*' },
+30 silly resolved     _id: 'gulp-xml-editor@2.1.1',
+30 silly resolved     _shasum: 'c51a831f6f52c9553d2f7a930b32498106baa5e9',
+30 silly resolved     _from: 'gulp-xml-editor@',
+30 silly resolved     _npmVersion: '1.4.28',
+30 silly resolved     _npmUser: { name: 'morou', email: 'kazuhiro.nakae@gmail.com' },
+30 silly resolved     maintainers: [ [Object] ],
+30 silly resolved     dist:
+30 silly resolved      { shasum: 'c51a831f6f52c9553d2f7a930b32498106baa5e9',
+30 silly resolved        tarball: 'http://registry.npmjs.org/gulp-xml-editor/-/gulp-xml-editor-2.1.1.tgz' },
+30 silly resolved     directories: {},
+30 silly resolved     _resolved: 'https://registry.npmjs.org/gulp-xml-editor/-/gulp-xml-editor-2.1.1.tgz',
+30 silly resolved     readme: 'ERROR: No README data found!' } ]
+31 info install gulp-xml-editor@2.1.1 into /Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump
+32 info installOne gulp-xml-editor@2.1.1
+33 verbose node_modules/gulp-xml-editor unbuild
+34 info preuninstall gulp-xml-editor@2.1.1
+35 info uninstall gulp-xml-editor@2.1.1
+36 verbose true,/Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules,/Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules unbuild gulp-xml-editor@2.1.1
+37 info postuninstall gulp-xml-editor@2.1.1
+38 verbose tar unpack /Users/michaeltaylor/.npm/gulp-xml-editor/2.1.1/package.tgz
+39 silly lockFile 376b35a4-ump-node-modules-gulp-xml-editor tar:///Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules/gulp-xml-editor
+40 verbose lock tar:///Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules/gulp-xml-editor /Users/michaeltaylor/.npm/376b35a4-ump-node-modules-gulp-xml-editor.lock
+41 silly lockFile 3dd0870f-ulp-xml-editor-2-1-1-package-tgz tar:///Users/michaeltaylor/.npm/gulp-xml-editor/2.1.1/package.tgz
+42 verbose lock tar:///Users/michaeltaylor/.npm/gulp-xml-editor/2.1.1/package.tgz /Users/michaeltaylor/.npm/3dd0870f-ulp-xml-editor-2-1-1-package-tgz.lock
+43 silly gunzTarPerm modes [ '755', '644' ]
+44 silly gunzTarPerm extractEntry package.json
+45 silly gunzTarPerm extractEntry .npmignore
+46 silly gunzTarPerm extractEntry README.md
+47 silly gunzTarPerm extractEntry index.js
+48 silly gunzTarPerm extractEntry test/byFunction.js
+49 silly gunzTarPerm extractEntry test/byObject.js
+50 silly gunzTarPerm extractEntry test/error.js
+51 silly gunzTarPerm extractEntry test/test.xml
+52 silly lockFile 376b35a4-ump-node-modules-gulp-xml-editor tar:///Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules/gulp-xml-editor
+53 silly lockFile 376b35a4-ump-node-modules-gulp-xml-editor tar:///Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules/gulp-xml-editor
+54 silly lockFile 3dd0870f-ulp-xml-editor-2-1-1-package-tgz tar:///Users/michaeltaylor/.npm/gulp-xml-editor/2.1.1/package.tgz
+55 silly lockFile 3dd0870f-ulp-xml-editor-2-1-1-package-tgz tar:///Users/michaeltaylor/.npm/gulp-xml-editor/2.1.1/package.tgz
+56 info preinstall gulp-xml-editor@2.1.1
+57 verbose readDependencies using package.json deps
+58 verbose readDependencies using package.json deps
+59 verbose cache add [ 'through2@~1.1.1', null ]
+60 verbose cache add name=undefined spec="through2@~1.1.1" args=["through2@~1.1.1",null]
+61 verbose parsed url { protocol: null,
+61 verbose parsed url   slashes: null,
+61 verbose parsed url   auth: null,
+61 verbose parsed url   host: null,
+61 verbose parsed url   port: null,
+61 verbose parsed url   hostname: null,
+61 verbose parsed url   hash: null,
+61 verbose parsed url   search: null,
+61 verbose parsed url   query: null,
+61 verbose parsed url   pathname: 'through2@~1.1.1',
+61 verbose parsed url   path: 'through2@~1.1.1',
+61 verbose parsed url   href: 'through2@~1.1.1' }
+62 verbose cache add [ 'libxmljs@~0.12.0', null ]
+63 verbose cache add name=undefined spec="libxmljs@~0.12.0" args=["libxmljs@~0.12.0",null]
+64 verbose parsed url { protocol: null,
+64 verbose parsed url   slashes: null,
+64 verbose parsed url   auth: null,
+64 verbose parsed url   host: null,
+64 verbose parsed url   port: null,
+64 verbose parsed url   hostname: null,
+64 verbose parsed url   hash: null,
+64 verbose parsed url   search: null,
+64 verbose parsed url   query: null,
+64 verbose parsed url   pathname: 'libxmljs@~0.12.0',
+64 verbose parsed url   path: 'libxmljs@~0.12.0',
+64 verbose parsed url   href: 'libxmljs@~0.12.0' }
+65 verbose cache add name="through2" spec="~1.1.1" args=["through2","~1.1.1"]
+66 verbose parsed url { protocol: null,
+66 verbose parsed url   slashes: null,
+66 verbose parsed url   auth: null,
+66 verbose parsed url   host: null,
+66 verbose parsed url   port: null,
+66 verbose parsed url   hostname: null,
+66 verbose parsed url   hash: null,
+66 verbose parsed url   search: null,
+66 verbose parsed url   query: null,
+66 verbose parsed url   pathname: '~1.1.1',
+66 verbose parsed url   path: '~1.1.1',
+66 verbose parsed url   href: '~1.1.1' }
+67 verbose addNamed [ 'through2', '~1.1.1' ]
+68 verbose addNamed [ null, '>=1.1.1-0 <1.2.0-0' ]
+69 silly lockFile 8f3bd9e0-through2-1-1-1 through2@~1.1.1
+70 verbose lock through2@~1.1.1 /Users/michaeltaylor/.npm/8f3bd9e0-through2-1-1-1.lock
+71 verbose cache add name="libxmljs" spec="~0.12.0" args=["libxmljs","~0.12.0"]
+72 verbose parsed url { protocol: null,
+72 verbose parsed url   slashes: null,
+72 verbose parsed url   auth: null,
+72 verbose parsed url   host: null,
+72 verbose parsed url   port: null,
+72 verbose parsed url   hostname: null,
+72 verbose parsed url   hash: null,
+72 verbose parsed url   search: null,
+72 verbose parsed url   query: null,
+72 verbose parsed url   pathname: '~0.12.0',
+72 verbose parsed url   path: '~0.12.0',
+72 verbose parsed url   href: '~0.12.0' }
+73 verbose addNamed [ 'libxmljs', '~0.12.0' ]
+74 verbose addNamed [ null, '>=0.12.0-0 <0.13.0-0' ]
+75 silly lockFile b648dcbc-libxmljs-0-12-0 libxmljs@~0.12.0
+76 verbose lock libxmljs@~0.12.0 /Users/michaeltaylor/.npm/b648dcbc-libxmljs-0-12-0.lock
+77 silly addNameRange { name: 'through2', range: '>=1.1.1-0 <1.2.0-0', hasData: false }
+78 verbose registry.get https://registry.npmjs.org/through2 not expired, no request
+79 silly addNameRange number 2 { name: 'through2', range: '>=1.1.1-0 <1.2.0-0', hasData: true }
+80 silly addNameRange versions [ 'through2',
+80 silly addNameRange   [ '0.0.0',
+80 silly addNameRange     '0.0.1',
+80 silly addNameRange     '0.0.2',
+80 silly addNameRange     '0.0.3',
+80 silly addNameRange     '0.0.4',
+80 silly addNameRange     '0.0.5',
+80 silly addNameRange     '0.1.0',
+80 silly addNameRange     '0.2.0',
+80 silly addNameRange     '0.2.1',
+80 silly addNameRange     '0.2.2',
+80 silly addNameRange     '0.2.3',
+80 silly addNameRange     '0.3.0',
+80 silly addNameRange     '0.4.0',
+80 silly addNameRange     '0.4.1',
+80 silly addNameRange     '1.0.0',
+80 silly addNameRange     '0.4.2',
+80 silly addNameRange     '0.5.0',
+80 silly addNameRange     '0.5.1',
+80 silly addNameRange     '0.6.0',
+80 silly addNameRange     '1.1.0',
+80 silly addNameRange     '0.6.1',
+80 silly addNameRange     '1.1.1',
+80 silly addNameRange     '0.6.2',
+80 silly addNameRange     '0.6.3' ] ]
+81 verbose addNamed [ 'through2', '1.1.1' ]
+82 verbose addNamed [ '1.1.1', '1.1.1' ]
+83 silly lockFile e79f1cfa-through2-1-1-1 through2@1.1.1
+84 verbose lock through2@1.1.1 /Users/michaeltaylor/.npm/e79f1cfa-through2-1-1-1.lock
+85 silly lockFile e79f1cfa-through2-1-1-1 through2@1.1.1
+86 silly lockFile e79f1cfa-through2-1-1-1 through2@1.1.1
+87 silly lockFile 8f3bd9e0-through2-1-1-1 through2@~1.1.1
+88 silly lockFile 8f3bd9e0-through2-1-1-1 through2@~1.1.1
+89 silly addNameRange { name: 'libxmljs',
+89 silly addNameRange   range: '>=0.12.0-0 <0.13.0-0',
+89 silly addNameRange   hasData: false }
+90 verbose request where is /libxmljs
+91 verbose request registry https://registry.npmjs.org/
+92 verbose request id 03d0799ce346e4cc
+93 verbose url raw /libxmljs
+94 verbose url resolving [ 'https://registry.npmjs.org/', './libxmljs' ]
+95 verbose url resolved https://registry.npmjs.org/libxmljs
+96 verbose request where is https://registry.npmjs.org/libxmljs
+97 info trying registry request attempt 1 at 09:34:46
+98 verbose etag "DDSKRCGNKGQKGH3CU2WVFIYAN"
+99 http GET https://registry.npmjs.org/libxmljs
+100 http 304 https://registry.npmjs.org/libxmljs
+101 silly registry.get cb [ 304,
+101 silly registry.get   { date: 'Thu, 08 Jan 2015 14:34:46 GMT',
+101 silly registry.get     server: 'Apache',
+101 silly registry.get     via: '1.1 varnish',
+101 silly registry.get     'last-modified': 'Thu, 08 Jan 2015 14:34:46 GMT',
+101 silly registry.get     'cache-control': 'max-age=60',
+101 silly registry.get     etag: '"DDSKRCGNKGQKGH3CU2WVFIYAN"',
+101 silly registry.get     age: '0',
+101 silly registry.get     'x-served-by': 'cache-jfk1029-JFK',
+101 silly registry.get     'x-cache': 'HIT',
+101 silly registry.get     'x-cache-hits': '1',
+101 silly registry.get     'x-timer': 'S1420727686.576803,VS0,VE14',
+101 silly registry.get     vary: 'Accept',
+101 silly registry.get     'content-length': '0',
+101 silly registry.get     'keep-alive': 'timeout=10, max=50',
+101 silly registry.get     connection: 'Keep-Alive' } ]
+102 verbose etag https://registry.npmjs.org/libxmljs from cache
+103 silly addNameRange number 2 { name: 'libxmljs',
+103 silly addNameRange   range: '>=0.12.0-0 <0.13.0-0',
+103 silly addNameRange   hasData: true }
+104 silly addNameRange versions [ 'libxmljs',
+104 silly addNameRange   [ '0.4.1',
+104 silly addNameRange     '0.4.2',
+104 silly addNameRange     '0.4.3',
+104 silly addNameRange     '0.5.0',
+104 silly addNameRange     '0.5.1',
+104 silly addNameRange     '0.5.2',
+104 silly addNameRange     '0.5.3',
+104 silly addNameRange     '0.5.4',
+104 silly addNameRange     '0.6.0',
+104 silly addNameRange     '0.6.1',
+104 silly addNameRange     '0.7.0',
+104 silly addNameRange     '0.7.1',
+104 silly addNameRange     '0.8.0',
+104 silly addNameRange     '0.8.1',
+104 silly addNameRange     '0.9.0',
+104 silly addNameRange     '0.10.0',
+104 silly addNameRange     '0.11.0',
+104 silly addNameRange     '0.11.1',
+104 silly addNameRange     '0.12.0' ] ]
+105 verbose addNamed [ 'libxmljs', '0.12.0' ]
+106 verbose addNamed [ '0.12.0', '0.12.0' ]
+107 silly lockFile 11cf4062-libxmljs-0-12-0 libxmljs@0.12.0
+108 verbose lock libxmljs@0.12.0 /Users/michaeltaylor/.npm/11cf4062-libxmljs-0-12-0.lock
+109 silly lockFile eca29a10-org-libxmljs-libxmljs-0-12-0-tgz https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+110 verbose lock https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz /Users/michaeltaylor/.npm/eca29a10-org-libxmljs-libxmljs-0-12-0-tgz.lock
+111 verbose addRemoteTarball [ 'https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz',
+111 verbose addRemoteTarball   '33b482dd265ce8aab7221f8d6959b03ff443b207' ]
+112 info retry fetch attempt 1 at 09:34:46
+113 verbose fetch to= /var/folders/ht/5w8jdfzn7914yt29xy0b4g5c0000gn/T/npm-62017-XWZIvOGF/registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+114 http GET https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+115 http 200 https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+116 silly lockFile eca29a10-org-libxmljs-libxmljs-0-12-0-tgz https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+117 silly lockFile eca29a10-org-libxmljs-libxmljs-0-12-0-tgz https://registry.npmjs.org/libxmljs/-/libxmljs-0.12.0.tgz
+118 silly lockFile 11cf4062-libxmljs-0-12-0 libxmljs@0.12.0
+119 silly lockFile 11cf4062-libxmljs-0-12-0 libxmljs@0.12.0
+120 silly lockFile b648dcbc-libxmljs-0-12-0 libxmljs@~0.12.0
+121 silly lockFile b648dcbc-libxmljs-0-12-0 libxmljs@~0.12.0
+122 verbose about to build /Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules/gulp-xml-editor
+123 verbose node_modules/gulp-xml-editor unbuild
+124 info preuninstall gulp-xml-editor@2.1.1
+125 info uninstall gulp-xml-editor@2.1.1
+126 verbose true,/Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules,/Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump/node_modules unbuild gulp-xml-editor@2.1.1
+127 info postuninstall gulp-xml-editor@2.1.1
+128 error Error: EACCES, mkdir '/Users/michaeltaylor/.npm/libxmljs/0.12.0'
+128 error  { [Error: EACCES, mkdir '/Users/michaeltaylor/.npm/libxmljs/0.12.0']
+128 error   errno: 3,
+128 error   code: 'EACCES',
+128 error   path: '/Users/michaeltaylor/.npm/libxmljs/0.12.0',
+128 error   parent: 'gulp-xml-editor' }
+129 error Please try running this command again as root/Administrator.
+130 error System Darwin 13.3.0
+131 error command "node" "/usr/local/bin/npm" "install" "gulp-xml-editor" "--save-dev"
+132 error cwd /Users/michaeltaylor/Workspace/Dev/repos/gulp-cordova-bump
+133 error node -v v0.10.30
+134 error npm -v 1.4.21
+135 error path /Users/michaeltaylor/.npm/libxmljs/0.12.0
+136 error code EACCES
+137 error errno 3
+138 error stack Error: EACCES, mkdir '/Users/michaeltaylor/.npm/libxmljs/0.12.0'
+139 verbose exit [ 3, true ]
