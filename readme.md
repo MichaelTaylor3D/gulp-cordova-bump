@@ -14,15 +14,18 @@ $ npm install --save-dev gulp-cordova-bump
 
 ```js
 var bump = require('gulp-cordova-bump');
+var argv = require('yargs').argv;
 
 gulp.task("bump", function(params)
 {
-    if (gulp.env.patch) {
-        bump('patch');
-    } else if (gulp.env.minor) {
-        bump('minor');
-    } else if (gulp.env.major) {
-        bump('major');
+    if (argv.patch) {
+        bump.ver('patch');
+    } else if (argv.minor) {
+        bump.ver('minor');
+    } else if (argv.major) {
+        bump.ver('major');
+    } else if (argv.setversion) {
+        bump.set(argv.setverion);
     }
 }
 ```
@@ -31,6 +34,7 @@ gulp.task("bump", function(params)
 $ gulp bump --patch
 $ gulp bump --minor
 $ gulp bump --major
+$ gulp bump --setversion=2.1.0
 ```
 
 

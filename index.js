@@ -18,6 +18,11 @@ function bumpver(version) {
   var pkg = getPackageJson();
   var oldVer = pkg.version;
   var newVer = semver.inc(oldVer, version);
+  setver(newVer);
+}
+
+function setver(newVer) {
+
   var jsonFilter = filter('**/*.json');
   var xmlFilter = filter('**/*.xml');
 
@@ -33,4 +38,10 @@ function bumpver(version) {
   .pipe(gulp.dest("./"));
 }
 
-module.exports = bumpver;
+exports.ver = function(version) {
+  bumpver(version);
+};
+
+exports.set = function(version) {
+  setver(version);
+}
