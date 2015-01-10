@@ -5,4 +5,4 @@ npm-debug.log
 .project
 node_modules
 .DS_Store
-.gulpfile
+gulpfile.js
