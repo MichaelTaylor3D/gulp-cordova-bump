@@ -27,7 +27,7 @@ gulp.task("bump", function(params)
     } else if (argv.setversion) {
         bump.set(argv.setverion);
     }
-}
+})
 ```
 ## Usage
 ```sh

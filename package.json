@@ -1,6 +1,6 @@
 {
   "name": "gulp-cordova-bump",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bump cordova package version",
   "main": "index.js",
   "repository": {
