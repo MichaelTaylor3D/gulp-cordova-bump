@@ -1,11 +1,11 @@
-
 var gulp = require('gulp'),
     bump = require('gulp-bump'),
     gutil = require('gulp-util'),
     semver = require('semver'),
     filter = require('gulp-filter'),
     xeditor = require("gulp-xml-editor"),
-    fs = require('fs');
+    fs = require('fs'),
+    argv = require('yargs').argv;;
 
 var getPackageJson = function () {
   return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
@@ -38,10 +38,15 @@ function setver(newVer) {
   .pipe(gulp.dest("./"));
 }
 
-exports.ver = function(version) {
-  bumpver(version);
-};
-
-exports.set = function(version) {
-  setver(version);
+module.exports = function() {
+    if (argv.patch) {
+      return bumpver('patch');
+    } else if (argv.minor) {
+        return bumpver('minor');
+    } else if (argv.major) {
+        return bumpver('major');
+    } else if (argv.setversion) {
+        return setver(argv.setverion);
+    }
 }
+

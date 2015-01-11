@@ -13,21 +13,9 @@ $ npm install --save-dev gulp-cordova-bump
 ## Add the following to your gulpfile
 
 ```js
-var bump = require('gulp-cordova-bump');
-var argv = require('yargs').argv;
-
-gulp.task("bump", function(params)
-{
-    if (argv.patch) {
-        bump.ver('patch');
-    } else if (argv.minor) {
-        bump.ver('minor');
-    } else if (argv.major) {
-        bump.ver('major');
-    } else if (argv.setversion) {
-        bump.set(argv.setverion);
-    }
-})
+gulp.task('bump', function() {
+    require('gulp-cordova-bump')();
+});
 ```
 ## Usage
 ```sh
