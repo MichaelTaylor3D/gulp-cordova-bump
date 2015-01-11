@@ -40,13 +40,13 @@ function setver(newVer) {
 
 module.exports = function() {
     if (argv.patch) {
-      return bumpver('patch');
+      bumpver('patch');
     } else if (argv.minor) {
-        return bumpver('minor');
+      bumpver('minor');
     } else if (argv.major) {
-        return bumpver('major');
+      bumpver('major');
     } else if (argv.setversion) {
-        return setver(argv.setverion);
+      setver(argv.setversion);
     }
 }
 
