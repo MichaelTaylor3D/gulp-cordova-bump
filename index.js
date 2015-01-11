@@ -38,6 +38,10 @@ function setver(newVer) {
   .pipe(gulp.dest("./"));
 }
 
+function help() {
+  console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
+}
+
 module.exports = function() {
     if (argv.patch) {
       bumpver('patch');
@@ -47,6 +51,8 @@ module.exports = function() {
       bumpver('major');
     } else if (argv.setversion) {
       setver(argv.setversion);
+    } else {
+      help();
     }
 }
 
