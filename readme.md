@@ -13,9 +13,7 @@ $ npm install --save-dev gulp-cordova-bump
 ## Add the following to your gulpfile
 
 ```js
-gulp.task('bump', function() {
-    require('gulp-cordova-bump')();
-});
+gulp.task('bump', require('gulp-cordova-bump')());
 ```
 ## Usage
 ```sh
