@@ -1,19 +1,43 @@
+/*
+* Author: Michael Taylor
+* www.michaeltaylor3d.com
+* 
+* usage: 
+* put 
+*    gulp.task('bump', require('gulp-cordova-bump')());
+* into your gulpfile
+*/
+
 var gulp = require('gulp'),
-    bump = require('gulp-bump'),
-    gutil = require('gulp-util'),
-    semver = require('semver'),
-    filter = require('gulp-filter'),
-    xeditor = require("gulp-xml-editor"),
-    fs = require('fs'),
-    argv = require('yargs').argv;;
+  args = require("yargs").argv,
+  fs = require("fs"),
+  semver = require('semver'),
+  gutil = require('gutil'),
+  $ = require('gulp-load-plugins')();
 
-var getPackageJson = function () {
-  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-};
+/*
+* module function -----------------------
+*/
 
-function bumpver(version) {
-  
-  gutil.log("Remember to run this before you run cordova build");
+module.exports = function() {
+    if (args.patch) {
+      bumpver('patch');
+    } else if (args.minor) {
+      bumpver('minor');
+    } else if (args.major) {
+      bumpver('major');
+    } else if (args.setversion) {
+      setver(args.setversion);
+    } else {
+      help();
+    }
+}
+
+/*
+* main functions -----------------------
+*/
+
+function bumpver(version) {  
   
   var pkg = getPackageJson();
   var oldVer = pkg.version;
@@ -23,36 +47,35 @@ function bumpver(version) {
 
 function setver(newVer) {
 
-  var jsonFilter = filter('**/*.json');
-  var xmlFilter = filter('**/*.xml');
+  pluginMessage();
+
+  var jsonFilter = $.filter('**/*.json');
+  var xmlFilter = $.filter('**/*.xml');
 
   return gulp.src(['./package.json', './bower.json', './config.xml'])
     .pipe(jsonFilter)
-    .pipe(bump({version: newVer}))
+    .pipe($.bump({version: newVer}))
     .pipe(gulp.dest('./'))
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
-    .pipe(xeditor([
+    .pipe($.xmlEditor([
         { path: '.', attr: { 'version': newVer } } 
     ]))
   .pipe(gulp.dest("./"));
 }
 
+/*
+* helper functions -----------------------
+*/
+
+var getPackageJson = function () {
+  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+};
+
 function help() {
-  console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
+  gutil.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
 }
 
-module.exports = function() {
-    if (argv.patch) {
-      bumpver('patch');
-    } else if (argv.minor) {
-      bumpver('minor');
-    } else if (argv.major) {
-      bumpver('major');
-    } else if (argv.setversion) {
-      setver(argv.setversion);
-    } else {
-      help();
-    }
+function pluginMessage() {
+  gutil.log("\n\tRemember to run this before you run cordova build\n");
 }
-

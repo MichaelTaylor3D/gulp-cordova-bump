@@ -1,6 +1,6 @@
 {
   "name": "gulp-cordova-bump",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bump cordova package version",
   "main": "index.js",
   "repository": {
@@ -20,8 +20,10 @@
     "gulp"
   ],
   "dependencies": {
+    "fs": "0.0.2",
     "gulp-bump": "^0.1.11",
     "gulp-filter": "^2.0.0",
+    "gulp-load-plugins": "^0.8.0",
     "gulp-util": "^3.0.2",
     "gulp-xml-editor": "^2.1.1",
     "gutil": "^1.5.5",
