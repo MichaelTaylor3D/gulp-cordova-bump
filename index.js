@@ -8,18 +8,21 @@
 * into your gulpfile
 */
 
-var gulp = require('gulp'),
-  args = require("yargs").argv,
-  fs = require("fs"),
-  semver = require('semver'),
-  gutil = require('gutil'),
-  $ = require('gulp-load-plugins')();
+'use strict';
+
+var vfs = require('vinyl-fs');
+var args = require("yargs").argv;
+var fs = require("fs");
+var semver = require('semver');
+var gutil = require('gutil');
+var $ = require('gulp-load-plugins')();
 
 /*
 * module function -----------------------
 */
 
 module.exports = function() {
+  
     if (args.patch) {
       bumpver('patch');
     } else if (args.minor) {
@@ -52,16 +55,16 @@ function setver(newVer) {
   var jsonFilter = $.filter('**/*.json');
   var xmlFilter = $.filter('**/*.xml');
 
-  return gulp.src(['./package.json', './bower.json', './config.xml'])
+  return vfs.src(['./package.json', './bower.json', './config.xml'])
     .pipe(jsonFilter)
     .pipe($.bump({version: newVer}))
-    .pipe(gulp.dest('./'))
+    .pipe(vfs.dest('./'))
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
     .pipe($.xmlEditor([
         { path: '.', attr: { 'version': newVer } } 
     ]))
-  .pipe(gulp.dest("./"));
+  .pipe(vfs.dest("./"));
 }
 
 /*
