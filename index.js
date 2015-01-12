@@ -4,7 +4,7 @@
 * 
 * usage: 
 * put 
-*    gulp.task('bump', require('gulp-cordova-bump')());
+*    gulp.task('bump', require('gulp-cordova-bump');
 * into your gulpfile
 */
 
