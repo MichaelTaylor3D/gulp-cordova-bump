@@ -18,39 +18,37 @@ var gutil = require('gutil');
 var $ = require('gulp-load-plugins')();
 
 /*
-* module function -----------------------
-*/
-
-module.exports = function() {
-  
-    if (args.patch) {
-      bumpver('patch');
-    } else if (args.minor) {
-      bumpver('minor');
-    } else if (args.major) {
-      bumpver('major');
-    } else if (args.setversion) {
-      setver(args.setversion);
-    } else {
-      help();
-    }
-}
-
-/*
 * main functions -----------------------
 */
 
-function bumpver(version) {  
-  
-  var pkg = getPackageJson();
-  var oldVer = pkg.version;
-  var newVer = semver.inc(oldVer, version);
-  setver(newVer);
+function Bump() {}
+
+Bump.prototype.run = function() {
+
+  if (args.patch) {
+    this.inc('patch');
+  } else if (args.minor) {
+    this.inc('minor');
+  } else if (args.major) {
+    this.inc('major');
+  } else if (args.setversion) {
+    this.set(args.setversion);
+  } else {
+    this.help();
+  }
 }
 
-function setver(newVer) {
+Bump.prototype.inc = function(version) {
 
-  pluginMessage();
+  var pkg = this.getPackageJson();
+  var oldVer = pkg.version;
+  var newVer = semver.inc(oldVer, version);
+  this.set(newVer);
+}
+
+Bump.prototype.set = function(newVer) {
+
+  this.pluginMessage();
 
   var jsonFilter = $.filter('**/*.json');
   var xmlFilter = $.filter('**/*.xml');
@@ -71,14 +69,21 @@ function setver(newVer) {
 * helper functions -----------------------
 */
 
-var getPackageJson = function () {
+Bump.prototype.getPackageJson = function () {
   return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 };
 
-function help() {
+Bump.prototype.pluginMessage = function() {
+  gutil.log("\n\tRemember to run this before you run cordova build\n");
+}
+
+Bump.prototype.help = function() {
   gutil.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
 }
 
-function pluginMessage() {
-  gutil.log("\n\tRemember to run this before you run cordova build\n");
-}
+/*
+* module function -----------------------
+*/
+
+var init = new Bump();
+module.exports = init.run();
