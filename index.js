@@ -1,9 +1,9 @@
 /*
 * Author: Michael Taylor
 * www.michaeltaylor3d.com
-* 
-* usage: 
-* put 
+*
+* usage:
+* put
 *    gulp.task('bump', require('gulp-cordova-bump'));
 * into your gulpfile
 */
@@ -26,15 +26,15 @@ function Bump() {}
 Bump.prototype.run = function() {
 
   if (args.patch) {
-    this.inc('patch');
+    return this.inc('patch');
   } else if (args.minor) {
-    this.inc('minor');
+    return this.inc('minor');
   } else if (args.major) {
-    this.inc('major');
+    return this.inc('major');
   } else if (args.setversion) {
-    this.set(args.setversion);
+    return this.set(args.setversion);
   } else {
-    this.help();
+    return this.help();
   }
 }
 
@@ -43,7 +43,7 @@ Bump.prototype.inc = function(version) {
   var pkg = this.getPackageJson();
   var oldVer = pkg.version;
   var newVer = semver.inc(oldVer, version);
-  this.set(newVer);
+  return this.set(newVer);
 }
 
 Bump.prototype.set = function(newVer) {
@@ -60,7 +60,7 @@ Bump.prototype.set = function(newVer) {
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
     .pipe($.xmlEditor([
-        { path: '.', attr: { 'version': newVer } } 
+        { path: '.', attr: { 'version': newVer } }
     ]))
   .pipe(vfs.dest("./"));
 }
@@ -86,4 +86,4 @@ Bump.prototype.help = function() {
 */
 
 var init = new Bump();
-module.exports = function () { init.run(); };
+module.exports = function () { return init.run(); };
