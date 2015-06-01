@@ -30,7 +30,7 @@ bump('patch');
 bump('minor');
 bump('major');
 ```
-
+It currently does not support manually setting the version like you can in the CLI.
 
 ## License
 
