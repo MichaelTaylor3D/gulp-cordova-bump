@@ -23,6 +23,14 @@ $ gulp bump --major
 $ gulp bump --setversion=2.1.0
 ```
 
+## Build script support (Experimental)
+```sh
+var bump = require('gulp-cordova-bump');
+bump('patch');
+bump('minor');
+bump('major');
+```
+
 
 ## License
 
