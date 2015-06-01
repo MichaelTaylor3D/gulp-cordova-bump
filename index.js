@@ -23,13 +23,13 @@ var $ = require('gulp-load-plugins')();
 
 function Bump() {}
 
-Bump.prototype.run = function() {
+Bump.prototype.run = function(version) {
 
-  if (args.patch) {
+  if (args.patch || version == 'patch') {
     return this.inc('patch');
-  } else if (args.minor) {
+  } else if (args.minor  || version == 'minor') {
     return this.inc('minor');
-  } else if (args.major) {
+  } else if (args.major  || version == 'major') {
     return this.inc('major');
   } else if (args.setversion) {
     return this.set(args.setversion);
