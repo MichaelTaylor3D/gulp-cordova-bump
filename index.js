@@ -86,4 +86,4 @@ Bump.prototype.help = function() {
 */
 
 var init = new Bump();
-module.exports = function () { return init.run(); };
+module.exports = function (version) { return init.run(version); };
