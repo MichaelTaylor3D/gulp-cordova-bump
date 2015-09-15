@@ -76,17 +76,17 @@ Bump.prototype.set = function(newVer) {
     .pipe(jsonFilter) 
     .pipe($.bump({version: newVer}))
     .pipe(packageJsonFilter)
-    .pipe(vfs.dest(this.packagejson))
+    .pipe(vfs.dest(this.getFolderPath(this.packagejson)))
     .pipe(packageJsonFilter.restore())
     .pipe(bowerJsonFilter)
-    .pipe(vfs.dest(this.bowerjson))
+    .pipe(vfs.dest(this.getFolderPath(this.bowerjson)))
     .pipe(bowerJsonFilter.restore())
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
     .pipe($.xmlEditor([
         { path: '.', attr: { 'version': newVer } }
     ]))
-  .pipe(vfs.dest(this.configxml));
+  .pipe(vfs.dest(this.getFolderPath(this.configxml)));
 }
 
 /*
@@ -99,6 +99,10 @@ Bump.prototype.getPackageJson = function () {
 
 Bump.prototype.pluginMessage = function() {
   gutil.log("\n\tRemember to run this before you run cordova build\n");
+}
+
+Bump.prototype.getFolderPath = function(path) {
+  return path.substr(0,path.lastIndexOf('/') + 1);
 }
 
 Bump.prototype.help = function() {
