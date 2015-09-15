@@ -24,7 +24,24 @@ var $ = require('gulp-load-plugins')();
 function Bump() {}
 
 Bump.prototype.run = function() {
-
+  if (args.packagejson){
+    this.packagejson = args.packagejson;
+  } else {
+    this.packagejson = './package.json';
+  }
+  
+  if (args.bowerjson){
+    this.bowerjson = args.bowerjson;
+  } else {
+    this.bowerjson = './bower.json';
+  }
+  
+  if (args.configxml){
+    this.configxml = args.configxml;
+  } else {
+    this.configxml = './config.xml';
+  }
+  
   if (args.patch) {
     return this.inc('patch');
   } else if (args.minor) {
@@ -53,7 +70,7 @@ Bump.prototype.set = function(newVer) {
   var jsonFilter = $.filter('**/*.json');
   var xmlFilter = $.filter('**/*.xml');
 
-  return vfs.src(['./package.json', './bower.json', './config.xml'])
+  return vfs.src([this.packagejson, this.bowerjson, this.configxml])
     .pipe(jsonFilter)
     .pipe($.bump({version: newVer}))
     .pipe(vfs.dest('./'))
