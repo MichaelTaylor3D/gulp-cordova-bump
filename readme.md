@@ -22,6 +22,17 @@ $ gulp bump --minor
 $ gulp bump --major
 $ gulp bump --setversion=2.1.0
 ```
+You can also specify the location of `package.json`, `bower.json` and `config.xml` by using the following args:
+```sh
+$ gulp bump --patch --packagejson=<package_json_file_path>
+$ gulp bump --minor --bowerjson=<bower_json_file_path>
+$ gulp bump --major --configxml=<config_xml_file_path>
+
+e.g.
+
+$ gulp bump --setversion=2.1.0 --packagejson="./package.json" --bowerjson="./bower.json" --configxml="./config.xml"
+```
+
 
 
 ## License
