@@ -68,18 +68,25 @@ Bump.prototype.set = function(newVer) {
   this.pluginMessage();
 
   var jsonFilter = $.filter('**/*.json');
+  var packageJsonFilter = $.filter('**/package.json');
+  var bowerJsonFilter = $.filter('**/bower.json');
   var xmlFilter = $.filter('**/*.xml');
 
   return vfs.src([this.packagejson, this.bowerjson, this.configxml])
-    .pipe(jsonFilter)
+    .pipe(jsonFilter) 
     .pipe($.bump({version: newVer}))
-    .pipe(vfs.dest('./'))
+    .pipe(packageJsonFilter)
+    .pipe(vfs.dest(this.packagejson))
+    .pipe(packageJsonFilter.restore())
+    .pipe(bowerJsonFilter)
+    .pipe(vfs.dest(this.bowerjson))
+    .pipe(bowerJsonFilter.restore())
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
     .pipe($.xmlEditor([
         { path: '.', attr: { 'version': newVer } }
     ]))
-  .pipe(vfs.dest("./"));
+  .pipe(vfs.dest(this.configxml));
 }
 
 /*
