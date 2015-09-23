@@ -24,7 +24,24 @@ var $ = require('gulp-load-plugins')();
 function Bump() {}
 
 Bump.prototype.run = function() {
-
+  if (args.packagejson){
+    this.packagejson = args.packagejson;
+  } else {
+    this.packagejson = './package.json';
+  }
+  
+  if (args.bowerjson){
+    this.bowerjson = args.bowerjson;
+  } else {
+    this.bowerjson = './bower.json';
+  }
+  
+  if (args.configxml){
+    this.configxml = args.configxml;
+  } else {
+    this.configxml = './config.xml';
+  }
+  
   if (args.patch) {
     return this.inc('patch');
   } else if (args.minor) {
@@ -51,18 +68,25 @@ Bump.prototype.set = function(newVer) {
   this.pluginMessage();
 
   var jsonFilter = $.filter('**/*.json');
+  var packageJsonFilter = $.filter('**/package.json');
+  var bowerJsonFilter = $.filter('**/bower.json');
   var xmlFilter = $.filter('**/*.xml');
 
-  return vfs.src(['./package.json', './bower.json', './config.xml'])
-    .pipe(jsonFilter)
+  return vfs.src([this.packagejson, this.bowerjson, this.configxml])
+    .pipe(jsonFilter) 
     .pipe($.bump({version: newVer}))
-    .pipe(vfs.dest('./'))
+    .pipe(packageJsonFilter)
+    .pipe(vfs.dest(this.getFolderPath(this.packagejson)))
+    .pipe(packageJsonFilter.restore())
+    .pipe(bowerJsonFilter)
+    .pipe(vfs.dest(this.getFolderPath(this.bowerjson)))
+    .pipe(bowerJsonFilter.restore())
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
     .pipe($.xmlEditor([
         { path: '.', attr: { 'version': newVer } }
     ]))
-  .pipe(vfs.dest("./"));
+  .pipe(vfs.dest(this.getFolderPath(this.configxml)));
 }
 
 /*
@@ -75,6 +99,10 @@ Bump.prototype.getPackageJson = function () {
 
 Bump.prototype.pluginMessage = function() {
   gutil.log("\n\tRemember to run this before you run cordova build\n");
+}
+
+Bump.prototype.getFolderPath = function(path) {
+  return path.substr(0,path.lastIndexOf('/') + 1);
 }
 
 Bump.prototype.help = function() {
