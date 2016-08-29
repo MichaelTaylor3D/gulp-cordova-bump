@@ -15,6 +15,7 @@ var args = require("yargs").argv;
 var fs = require("fs");
 var semver = require('semver');
 var gutil = require('gutil');
+//var xmlTransformer = require("gulp-xml-transformer");
 var $ = require('gulp-load-plugins')();
 
 /*
@@ -83,7 +84,7 @@ Bump.prototype.set = function(newVer) {
     .pipe(bowerJsonFilter.restore())
     .pipe(jsonFilter.restore())
     .pipe(xmlFilter)
-    .pipe($.xmlEditor([
+    .pipe($.xmlTransformer([
         { path: '.', attr: { 'version': newVer } }
     ]))
   .pipe(vfs.dest(this.getFolderPath(this.configxml)));
