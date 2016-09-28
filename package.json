@@ -1,6 +1,6 @@
 {
   "name": "gulp-cordova-bump",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Bump cordova package version",
   "main": "index.js",
   "repository": {
@@ -12,11 +12,13 @@
     "email": "mtaylor@michaeltaylor3d.com",
     "url": "http://www.michaeltaylor3d.com"
   },
-  "contributors": [{
-    "name": "Akshaya Kumar Sharma",
-    "email": "akshayakrsh@gmail.com",
-    "url": "http://www.lordakshaya.com"
-  }],
+  "contributors": [
+    {
+      "name": "Akshaya Kumar Sharma",
+      "email": "akshayakrsh@gmail.com",
+      "url": "http://www.lordakshaya.com"
+    }
+  ],
   "keywords": [
     "gulpplugin",
     "cordova",
