@@ -58,6 +58,15 @@ gulp.task('testf', function () {
 
 
 gulp.task('restore', function () {
+   var setAndroidXmlCode = function (version) {
+      var code = 0;
+      _.split(version, '.').forEach(function (val) {
+         code = code * 100 + Number(val);
+      });
+
+      return code * 10;
+   };
+
    bump.run({
       packageJson: ['./package.json',
          './package1.json',
@@ -67,5 +76,11 @@ gulp.task('restore', function () {
          'subdir/package3.json'],
       configXml  : ['./config.xml', 'subdir/config2.xml'],
       setversion : "1.0.0"
+   });
+
+   bump.run({
+      configXml  : ['./config2.xml'],
+      setversion : "1.0.0",
+      setAndroidXmlCode: setAndroidXmlCode
    });
 });
