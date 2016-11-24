@@ -6,6 +6,8 @@
  * put
  *    gulp.task('bump', require('gulp-cordova-bump'));
  * into your gulpfile
+ *
+ * modified by laser
  */
 
 'use strict';
@@ -14,8 +16,9 @@ const vfs = require('vinyl-fs');
 const args = require("yargs")['argv'];
 const fs = require("fs");
 const semver = require('semver');
-const gutil = require('gutil');
+const chalk = require('chalk');
 const map = require('map-stream');
+const _ = require('lodash');
 const through2 = require('through2');
 const $ = require('gulp-load-plugins')();
 
@@ -26,37 +29,29 @@ const $ = require('gulp-load-plugins')();
 function Bump() {
    let self = {
       appendArgs: function (config) {
-         // console.log("Data before args:");
-         // console.log(config);
-         let result = Object.assign({}, args);
-
+         let result = _.pick(args, ['minor', 'major', 'patch', 'setversion']);
          if (config) result = Object.assign(result, config);
 
-         // if (!config.packageJson) config.packageJson = args.packageJson;
-         // if (!config.bowerJson) config.bowerJson = args.bowerJson;
-         // if (!config.configXml) config.configXml = args.configXml;
-         // if (!config.patch) config.patch = args.patch;
-         // if (!config.minor) config.minor = args.minor;
-         // if (!config.major) config.major = args.major;
-         // if (!config.setversion) config.setversion = args.setversion;
-         // if (!config.autofiles) config.autofiles = args.autofiles;
-
-         // console.log("Data after args:");
-         // console.log(config);
+         // on collision the higher one wins
+         if (result.setversion) {
+            result.bumpType = '';
+            result.singleVersion = true;
+         } else if (result.major) {
+            result.bumpType = 'major';
+         } else if (result.minor) {
+            result.bumpType = 'minor';
+         } else if (result.patch) {
+            result.bumpType = 'patch';
+         }
 
          return result;
       },
 
-      inc: function (version) {
-         let pkg = this.getPackageJson();
-         let oldVer = pkg.version;
-         let newVer = semver.inc(oldVer, version);
-
-         return this.set(newVer);
-      },
-
-      set: function (newVer) {
-         this.pluginMessage();
+      set: function (config) {
+         let newVer = null;
+         if (config.singleVersion && config.setversion) {
+            config.version = config.setversion;
+         }
 
          let jsonFilter = $.filter('**/*.json', {restore: true});
          let packageJsonFilter = $.filter('**/package*.json', {restore: true});
@@ -81,97 +76,124 @@ function Bump() {
             else src = [...src, this.configXml];
          }
 
-         //console.log(src);
-
-         let log = function (name) {
-            return function (data, cb) {
-               console.log(name);
-               console.log(data.base);
-               cb(null, data);
+         let xmlVersion = null;
+         let xmlAttrs = [{
+            'version': val => {
+               console.log(chalk.green('Old file version: ') + chalk.yellow(val));
+               if (config.singleVersion) {
+                  xmlVersion = config.version;
+               }
+               else {
+                  xmlVersion = semver.inc(val, config.bumpType);
+               }
+               console.log(chalk.green('New file version: ') + chalk.yellow(xmlVersion));
+               return xmlVersion;
             }
-         };
+         }];
 
-         if (src.length)
-            return vfs.src(src)
+         if (_.isFunction(config.setAndroidXmlCode)) {
+            xmlAttrs.push({
+               'android-versionCode': val => {
+                  console.log(chalk.green('Old android version code: ') + chalk.yellow(val));
+                  let newVal = config.setAndroidXmlCode(xmlVersion);
+                  console.log(chalk.green('New android version code: ') + chalk.yellow(newVal));
+
+                  return newVal;
+               }
+            })
+         }
+
+         if (src.length) {
+            let stream = vfs.src(src)
+               .pipe(through2.obj((file, enc, cb) => {
+                  console.log(chalk.white("##########################################################################"));
+                  console.log(chalk.green('Bumping file: ') + chalk.yellow(file.path));
+                  cb(null, file);
+               }))
                .pipe(jsonFilter)
-               .pipe($.bump({version: newVer}))
+               .pipe(through2.obj((file, enc, cb) => {
+                  let oldVer = require(file.path).version;
+                  console.log(chalk.green('Old file version: ') + chalk.yellow(oldVer));
+
+                  if (!config.version || !config.singleVersion) {
+                     // TODO: at least one .json file needs a version in case of single version, single xml is not enough
+                     config.version = semver.inc(oldVer, config.bumpType);
+                  }
+                  console.log(chalk.green('New file version: ') + chalk.yellow(config.version));
+                  cb(null, file);
+               }))
+               .pipe($.bump(config))
                .pipe(packageJsonFilter)
-               //.pipe(map(log("package")))
                .pipe(vfs.dest((file) => {
                   return file.base;
                }))
                .pipe(packageJsonFilter.restore)
                .pipe(bowerJsonFilter)
-               //.pipe(map(log("bower")))
                .pipe(vfs.dest((file) => {
                   return file.base;
                }))
                .pipe(bowerJsonFilter.restore)
                .pipe(jsonFilter.restore)
                .pipe(xmlFilter)
-               .pipe($.xmlTransformer([
-                  {path: '.', attr: {'version': newVer}}
-               ]))
+               .pipe($.xmlTransformer([{
+                  path: '.', attrs: xmlAttrs
+               }]))
                .pipe(vfs.dest((file) => {
                   return file.base;
-               }))
-               .on('error', function (e) {
-                  console.log(e);
-               });
+               }));
+
+            stream.on('error', (e) => {
+               console.log(chalk.red(e));
+            });
+            stream.on('end', () => {
+               console.log(chalk.white("##########################################################################"));
+
+               this.pluginMessage();
+            });
+
+            return stream;
+         }
       },
 
       /*
        * helper s ----------------------- : function
        */
 
-      getPackageJson: function () {
-         return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-      },
-
       pluginMessage: function () {
-         gutil.log("\n\tRemember to run this before you run cordova build\n");
+         console.log("\n\tRemember to run this before you run cordova build\n");
       }
    };
 
    return {
       run: function (input) {
-         let data = self.appendArgs(input);
+         let config = self.appendArgs(input);
 
-         if (data.packageJson) {
-            self.packageJson = data.packageJson;
-         } else if (data.autofiles && fs.existsSync('./package.json')) {
+         if (!config.hasOwnProperty('bumpType'))
+            return this.help();
+
+         if (config.packageJson) {
+            self.packageJson = config.packageJson;
+         } else if (config.autofiles && fs.existsSync('./package.json')) {
             self.packageJson = './package.json';
          }
 
-         // console.log(self.packageJson);
-
-         if (data.bowerJson) {
-            self.bowerJson = data.bowerJson;
-         } else if (data.autofiles && fs.existsSync('./bower.json')) {
+         if (config.bowerJson) {
+            self.bowerJson = config.bowerJson;
+         } else if (config.autofiles && fs.existsSync('./bower.json')) {
             self.bowerJson = './bower.json';
          }
 
-         if (data.configXml) {
-            self.configXml = data.configXml;
-         } else if (data.autofiles && fs.existsSync('./config.xml')) {
+         if (config.configXml) {
+            self.configXml = config.configXml;
+         } else if (config.autofiles && fs.existsSync('./config.xml')) {
             self.configXml = './config.xml';
          }
 
-         if (data.patch) {
-            return self.inc('patch');
-         } else if (data.minor) {
-            return self.inc('minor');
-         } else if (data.major) {
-            return self.inc('major');
-         } else if (data.setversion) {
-            return self.set(data.setversion);
-         } else {
-            return this.help();
-         }
+         return self.set(config);
       },
 
       help: function () {
-         gutil.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
+         console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
       }
    }
 }

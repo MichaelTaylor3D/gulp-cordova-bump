@@ -13,7 +13,9 @@ $ npm install --save-dev gulp-cordova-bump
 ## Add the following to your gulpfile
 
 ```js
-gulp.task('bump', require('gulp-cordova-bump'));
+gulp.task('bump', function () {
+   require('gulp-cordova-bump').run({autofiles: true});
+});
 ```
 ## Usage
 ```sh
@@ -33,7 +35,8 @@ e.g.
 $ gulp bump --setversion=2.1.0 --packagejson="./package.json" --bowerjson="./bower.json" --configxml="./config.xml"
 ```
 
-
+## Using spread operator and some other ES6 features that are now supported by Node.js:
+http://node.green/#spread-------operator
 
 ## License
 
