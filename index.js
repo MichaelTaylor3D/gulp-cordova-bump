@@ -30,6 +30,11 @@ function Bump() {
    let self = {
       appendArgs: function (config) {
          let result = _.pick(args, ['minor', 'major', 'patch', 'setversion']);
+
+         result['packageJson'] = args['packagejson'];
+         result['bowerJson'] = args['bowerjson'];
+         result['configXml'] = args['configxml'];
+
          if (config) result = Object.assign(result, config);
 
          // on collision the higher one wins
