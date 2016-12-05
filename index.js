@@ -1,118 +1,209 @@
 /*
-* Author: Michael Taylor
-* www.michaeltaylor3d.com
-*
-* usage:
-* put
-*    gulp.task('bump', require('gulp-cordova-bump'));
-* into your gulpfile
-*/
+ * Author: Michael Taylor
+ * www.michaeltaylor3d.com
+ *
+ * usage:
+ * put
+ *    gulp.task('bump', require('gulp-cordova-bump'));
+ * into your gulpfile
+ *
+ * modified by laser
+ */
 
 'use strict';
 
-var vfs = require('vinyl-fs');
-var args = require("yargs").argv;
-var fs = require("fs");
-var semver = require('semver');
-var gutil = require('gutil');
-//var xmlTransformer = require("gulp-xml-transformer");
-var $ = require('gulp-load-plugins')();
+const vfs = require('vinyl-fs');
+const args = require("yargs")['argv'];
+const fs = require("fs");
+const semver = require('semver');
+const chalk = require('chalk');
+const map = require('map-stream');
+const _ = require('lodash');
+const through2 = require('through2');
+const $ = require('gulp-load-plugins')();
 
 /*
-* main functions -----------------------
-*/
+ * main functions -----------------------
+ */
 
-function Bump() {}
+function Bump() {
+   let self = {
+      appendArgs: function (config) {
+         let result = _.pick(args, ['minor', 'major', 'patch', 'setversion']);
 
-Bump.prototype.run = function() {
-  if (args.packagejson){
-    this.packagejson = args.packagejson;
-  } else {
-    this.packagejson = './package.json';
-  }
-  
-  if (args.bowerjson){
-    this.bowerjson = args.bowerjson;
-  } else {
-    this.bowerjson = './bower.json';
-  }
-  
-  if (args.configxml){
-    this.configxml = args.configxml;
-  } else {
-    this.configxml = './config.xml';
-  }
-  
-  if (args.patch) {
-    return this.inc('patch');
-  } else if (args.minor) {
-    return this.inc('minor');
-  } else if (args.major) {
-    return this.inc('major');
-  } else if (args.setversion) {
-    return this.set(args.setversion);
-  } else {
-    return this.help();
-  }
-}
+         result['packageJson'] = args['packagejson'];
+         result['bowerJson'] = args['bowerjson'];
+         result['configXml'] = args['configxml'];
 
-Bump.prototype.inc = function(version) {
+         if (config) result = Object.assign(result, config);
 
-  var pkg = this.getPackageJson();
-  var oldVer = pkg.version;
-  var newVer = semver.inc(oldVer, version);
-  return this.set(newVer);
-}
+         // on collision the higher one wins
+         if (result.setversion) {
+            result.bumpType = '';
+            result.singleVersion = true;
+         } else if (result.major) {
+            result.bumpType = 'major';
+         } else if (result.minor) {
+            result.bumpType = 'minor';
+         } else if (result.patch) {
+            result.bumpType = 'patch';
+         }
 
-Bump.prototype.set = function(newVer) {
+         return result;
+      },
 
-  this.pluginMessage();
+      set: function (config) {
+         let newVer = null;
+         if (config.singleVersion && config.setversion) {
+            config.version = config.setversion;
+         }
 
-  var jsonFilter = $.filter('**/*.json');
-  var packageJsonFilter = $.filter('**/package.json');
-  var bowerJsonFilter = $.filter('**/bower.json');
-  var xmlFilter = $.filter('**/*.xml');
+         let jsonFilter = $.filter('**/*.json', {restore: true});
+         let packageJsonFilter = $.filter('**/package*.json', {restore: true});
+         let bowerJsonFilter = $.filter('**/bower*.json', {restore: true});
+         let xmlFilter = $.filter('**/*.xml', {restore: true});
 
-  return vfs.src([this.packagejson, this.bowerjson, this.configxml])
-    .pipe(jsonFilter) 
-    .pipe($.bump({version: newVer}))
-    .pipe(packageJsonFilter)
-    .pipe(vfs.dest(this.getFolderPath(this.packagejson)))
-    .pipe(packageJsonFilter.restore())
-    .pipe(bowerJsonFilter)
-    .pipe(vfs.dest(this.getFolderPath(this.bowerjson)))
-    .pipe(bowerJsonFilter.restore())
-    .pipe(jsonFilter.restore())
-    .pipe(xmlFilter)
-    .pipe($.xmlTransformer([
-        { path: '.', attr: { 'version': newVer } }
-    ]))
-  .pipe(vfs.dest(this.getFolderPath(this.configxml)));
+         let src = [];
+         if (this.packageJson) {
+            if (Array.isArray(this.packageJson)) src = [...src, ...this.packageJson];
+            else
+               src = [...src, this.packageJson];
+         }
+
+         if (this.bowerJson) {
+            if (Array.isArray(this.bowerJson)) src = [...src, ...this.bowerJson];
+            else
+               src = [...src, this.bowerJson];
+         }
+
+         if (this.configXml) {
+            if (Array.isArray(this.configXml)) src = [...src, ...this.configXml];
+            else src = [...src, this.configXml];
+         }
+
+         let xmlVersion = null;
+         let xmlAttrs = [{
+            'version': val => {
+               console.log(chalk.green('Old file version: ') + chalk.yellow(val));
+               if (config.singleVersion) {
+                  xmlVersion = config.version;
+               }
+               else {
+                  xmlVersion = semver.inc(val, config.bumpType);
+               }
+               console.log(chalk.green('New file version: ') + chalk.yellow(xmlVersion));
+               return xmlVersion;
+            }
+         }];
+
+         if (_.isFunction(config.setAndroidXmlCode)) {
+            xmlAttrs.push({
+               'android-versionCode': val => {
+                  console.log(chalk.green('Old android version code: ') + chalk.yellow(val));
+                  let newVal = config.setAndroidXmlCode(xmlVersion);
+                  console.log(chalk.green('New android version code: ') + chalk.yellow(newVal));
+
+                  return newVal;
+               }
+            })
+         }
+
+         if (src.length) {
+            let stream = vfs.src(src)
+               .pipe(through2.obj((file, enc, cb) => {
+                  console.log(chalk.white("##########################################################################"));
+                  console.log(chalk.green('Bumping file: ') + chalk.yellow(file.path));
+                  cb(null, file);
+               }))
+               .pipe(jsonFilter)
+               .pipe(through2.obj((file, enc, cb) => {
+                  let oldVer = require(file.path).version;
+                  console.log(chalk.green('Old file version: ') + chalk.yellow(oldVer));
+
+                  if (!config.version || !config.singleVersion) {
+                     // TODO: at least one .json file needs a version in case of single version, single xml is not enough
+                     config.version = semver.inc(oldVer, config.bumpType);
+                  }
+                  console.log(chalk.green('New file version: ') + chalk.yellow(config.version));
+                  cb(null, file);
+               }))
+               .pipe($.bump(config))
+               .pipe(packageJsonFilter)
+               .pipe(vfs.dest((file) => {
+                  return file.base;
+               }))
+               .pipe(packageJsonFilter.restore)
+               .pipe(bowerJsonFilter)
+               .pipe(vfs.dest((file) => {
+                  return file.base;
+               }))
+               .pipe(bowerJsonFilter.restore)
+               .pipe(jsonFilter.restore)
+               .pipe(xmlFilter)
+               .pipe($.xmlTransformer([{
+                  path: '.', attrs: xmlAttrs
+               }]))
+               .pipe(vfs.dest((file) => {
+                  return file.base;
+               }));
+
+            stream.on('error', (e) => {
+               console.log(chalk.red(e));
+            });
+            stream.on('end', () => {
+               console.log(chalk.white("##########################################################################"));
+
+               this.pluginMessage();
+            });
+
+            return stream;
+         }
+      },
+
+      /*
+       * helper s ----------------------- : function
+       */
+
+      pluginMessage: function () {
+         console.log("\n\tRemember to run this before you run cordova build\n");
+      }
+   };
+
+   return {
+      run: function (input) {
+         let config = self.appendArgs(input);
+
+         if (!config.hasOwnProperty('bumpType'))
+            return this.help();
+
+         if (config.packageJson) {
+            self.packageJson = config.packageJson;
+         } else if (config.autofiles && fs.existsSync('./package.json')) {
+            self.packageJson = './package.json';
+         }
+
+         if (config.bowerJson) {
+            self.bowerJson = config.bowerJson;
+         } else if (config.autofiles && fs.existsSync('./bower.json')) {
+            self.bowerJson = './bower.json';
+         }
+
+         if (config.configXml) {
+            self.configXml = config.configXml;
+         } else if (config.autofiles && fs.existsSync('./config.xml')) {
+            self.configXml = './config.xml';
+         }
+
+         return self.set(config);
+      },
+
+      help: function () {
+         console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
+      }
+   }
 }
 
 /*
-* helper functions -----------------------
-*/
-
-Bump.prototype.getPackageJson = function () {
-  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-};
-
-Bump.prototype.pluginMessage = function() {
-  gutil.log("\n\tRemember to run this before you run cordova build\n");
-}
-
-Bump.prototype.getFolderPath = function(path) {
-  return path.substr(0,path.lastIndexOf('/') + 1);
-}
-
-Bump.prototype.help = function() {
-  gutil.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
-}
-
-/*
-* module function -----------------------
-*/
-
-var init = new Bump();
-module.exports = function () { return init.run(); };
+ * module function -----------------------
+ */
+module.exports = new Bump();
