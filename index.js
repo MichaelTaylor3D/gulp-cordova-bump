@@ -94,6 +94,17 @@ function Bump() {
                console.log(chalk.green('New file version: ') + chalk.yellow(xmlVersion));
                return xmlVersion;
             }
+            'ios-CFBundleVersion': val => {
+               console.log(chalk.green('Old CFBundleVersion version: ') + chalk.yellow(val));
+               if (config.singleVersion) {
+                  xmlVersion = config.version;
+               }
+               else {
+                  xmlVersion = semver.inc(val, config.bumpType);
+               }
+               console.log(chalk.green('New CFBundleVersion version: ') + chalk.yellow(xmlVersion));
+               return xmlVersion;
+            }
          }];
 
          if (_.isFunction(config.setAndroidXmlCode)) {
