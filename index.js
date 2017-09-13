@@ -93,7 +93,7 @@ function Bump() {
                }
                console.log(chalk.green('New file version: ') + chalk.yellow(xmlVersion));
                return xmlVersion;
-            }
+            },
             'ios-CFBundleVersion': val => {
                console.log(chalk.green('Old CFBundleVersion version: ') + chalk.yellow(val));
                if (config.singleVersion) {
