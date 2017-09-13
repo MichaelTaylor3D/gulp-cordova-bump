@@ -22,6 +22,7 @@ gulp.task('bump', function () {
 $ gulp bump --patch
 $ gulp bump --minor
 $ gulp bump --major
+$ gulp bump --prerelease
 $ gulp bump --setversion=2.1.0
 ```
 You can also specify the location of `package.json`, `bower.json` and `config.xml` by using the following args:
@@ -60,7 +61,7 @@ Now this package supports multiple files in different directories.
 ## Notes
 This tool accept both command line parameters and config parameters in gulp, can be mixed
 If patch types are mixed, the priority of bumping: 
->setversion > major > minor > patch
+>setversion > major > minor > patch > prerelease
 
 > Using spread operator and some other ES6 features that are now supported by Node.js:
 http://node.green/#spread-------operator

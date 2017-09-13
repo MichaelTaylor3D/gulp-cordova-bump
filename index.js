@@ -29,7 +29,7 @@ const $ = require('gulp-load-plugins')();
 function Bump() {
    let self = {
       appendArgs: function (config) {
-         let result = _.pick(args, ['minor', 'major', 'patch', 'setversion']);
+         let result = _.pick(args, ['minor', 'major', 'patch', 'prerelease', 'setversion']);
 
          result['packageJson'] = args['packagejson'];
          result['bowerJson'] = args['bowerjson'];
@@ -47,6 +47,8 @@ function Bump() {
             result.bumpType = 'minor';
          } else if (result.patch) {
             result.bumpType = 'patch';
+         } else if (result.prerelease) {
+            result.bumpType = 'prerelease';
          }
 
          return result;
@@ -209,7 +211,7 @@ function Bump() {
       },
 
       help: function () {
-         console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --setversion=2.1.0\n');
+         console.log('\n\tUSAGE:\n\t\t$ gulp bump --patch\n\t\t$ gulp bump --minor\n\t\t$ gulp bump --major\n\t\t$ gulp bump --prerelease\n\t\t$ gulp bump --setversion=2.1.0\n');
       }
    }
 }
