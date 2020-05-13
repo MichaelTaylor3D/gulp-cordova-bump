@@ -71,6 +71,6 @@ http://node.green/#spread-------operator
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
 ## Donate
+ENS: michaeltaylor3d.eth
 
-* btc: 16UDfCDGDz6gKk63j23nQUp7WBU64XCn8b
-* eth: 0x4436eec0301378A3f35a7102e765e54dD8eE7782
+ETHER ADDRESS: 0x411b4F2dCFE158114d9396A30c625Bf7DefAD880
